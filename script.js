@@ -19,7 +19,7 @@ const musicaBeep = new Audio('/sons/beep.mp3');
 const musicaPlay = new Audio('/sons/play.wav');
 const musicaPause = new Audio('/sons/pause.mp3');
 
-let tempoDeCorridoSegundo = 1500
+let tempoDeCorridoSegundo = 30
 let intervaloId = null;
 
 musica.loop = true;
@@ -82,6 +82,11 @@ const contagemRegressiva = () => {
     if(tempoDeCorridoSegundo <= 0){
         musicaBeep.play();
         alert('Tempo finalizado!');
+        const focoAtivo = html.getAttribute('data-contexto') == 'foco'
+        if(focoAtivo){
+            const evento = new CustomEvent('FocoFinalizado');
+            document.dispatchEvent(evento);
+        }
         zerar();
         return
     }
